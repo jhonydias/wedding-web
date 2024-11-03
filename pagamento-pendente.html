@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificando Pagamento</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        /* Caixa principal */
+        .pending-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Cabeçalho e mensagem de pendência */
+        h1 {
+            font-size: 2.2rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Animação de espera */
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #007bff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .pending-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <script>
+        // Função para extrair parâmetros da URL
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        var productId = getUrlParameter("product_id");
+
+        function checkPaymentStatus() {
+            // Primeiro, obtemos o paymentId usando o productId
+            var getPaymentUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?productId=" + productId;
+
+            fetch(getPaymentUrl)
+                .then(response => response.json())
+                .then(data => {
+                    var paymentId = data.paymentId;
+                    if (!paymentId) {
+                        document.getElementById("message").innerText = "ID do pagamento não encontrado.";
+                        return;
+                    }
+
+                    // URL para verificar o status do pagamento com paymentId
+                    var checkStatusUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?paymentId=" + paymentId;
+
+                    function pollStatus() {
+                        fetch(checkStatusUrl)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === "approved") {
+                                    window.location.href = "https://jhonyejoene.com/retorno?id=" + productId;
+                                } else {
+                                    setTimeout(pollStatus, 5000); // Verifica novamente em 5 segundos
+                                }
+                            })
+                            .catch(error => console.error("Erro ao verificar status:", error));
+                    }
+
+                    pollStatus(); // Inicia a verificação do status
+                })
+                .catch(error => console.error("Erro ao obter ID do pagamento:", error));
+        }
+
+        window.onload = checkPaymentStatus;
+    </script>
+</head>
+<body>
+<div class="pending-container">
+    <div class="loader"></div>
+    <h1>Aguardando Confirmação...</h1>
+    <p id="message">Seu pagamento está sendo processado. Esta página será atualizada automaticamente.</p>
+</div>
+</body>
+</html>
