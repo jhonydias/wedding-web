@@ -44,7 +44,9 @@ $(document).ready(function () {
                 data.forEach(function (produto) {
                     // Definir o estado do produto com base no status
                     var produtoStatusClass = produto.status === 'OFF' ? 'product-unavailable' : '';
-                    var buttonContent = produto.status === 'OFF' ? '<span class="unavailable">COMPRADO</span>' : '<a href="' + produto.link + '" target="_blank" class="btn">Comprar agora</a>';
+                    var buttonContent = produto.status === 'OFF' ?
+                        '<span class="unavailable">COMPRADO</span>' :
+                        '<button onclick="startCheckout(\'' + produto.id + '\', \'' + produto.nome + '\', ' + produto.preco + ')" class="btn">Comprar agora</button>';
 
                     var produtoHTML =
                         '<div class="gift-item ' + produtoStatusClass + '">' +
@@ -61,7 +63,6 @@ $(document).ready(function () {
                 console.error('Erro ao carregar os produtos:', error);
             });
     }
-
     /***************** Waypoints ******************/
 
     $('.wp1').waypoint(function () {
@@ -301,4 +302,26 @@ $(document).ready(function () {
 // alert_markup
 function alert_markup(alert_type, msg) {
     return '<div class="alert alert-' + alert_type + '" role="alert">' + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span>&times;</span></button></div>';
+}
+
+/***************** Iniciar Checkout ******************/
+function startCheckout(productId, productName, productPrice) {
+    // URL do Google Apps Script para criar a preferência
+    var scriptUrl = "https://script.google.com/macros/s/AKfycbxSC8U3APnaVJI9hT2mvMJ7Se5N6h8SURB4OZaa8pI_eGJpNrEWdvMqcYgrUAx__x_J/exec";
+
+    // Cria a URL com os parâmetros do produto
+    var url = scriptUrl + "?userId=12345&productId=" + productId + "&productName=" + encodeURIComponent(productName) + "&productPrice=" + productPrice;
+
+    // Faz a requisição POST ao Google Apps Script para iniciar o Checkout Pro
+    fetch(url, { method: "POST" })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            // Redireciona para o Checkout Pro usando init_point
+            window.location.href = data.init_point;
+        })
+        .catch(function(error) {
+            console.error("Erro ao iniciar o checkout:", error);
+        });
 }
