@@ -307,7 +307,7 @@ function alert_markup(alert_type, msg) {
 /***************** Iniciar Checkout ******************/
 function startCheckout(productId, productName, productPrice) {
     // URL do Google Apps Script para criar a preferência
-    var scriptUrl = "https://script.google.com/macros/s/AKfycbwiGX8PnprMQXd5d_-MsRvjVR8npcouY7evIEv9UdLHfiDGBKK8B7Ot9E7oxDLkvpQ-/exec";
+    var scriptUrl = "https://script.google.com/macros/s/AKfycbxSC8U3APnaVJI9hT2mvMJ7Se5N6h8SURB4OZaa8pI_eGJpNrEWdvMqcYgrUAx__x_J/exec";
 
     // Cria a URL com os parâmetros do produto
     var url = scriptUrl + "?userId=12345&productId=" + productId + "&productName=" + encodeURIComponent(productName) + "&productPrice=" + productPrice;
