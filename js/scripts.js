@@ -46,7 +46,7 @@ $(document).ready(function () {
                     var produtoStatusClass = produto.status === 'OFF' ? 'product-unavailable' : '';
                     var buttonContent = produto.status === 'OFF' ?
                         '<span class="unavailable">COMPRADO</span>' :
-                        '<button onclick="startCheckout(\'' + produto.id + '\', \'' + produto.nome + '\', ' + produto.preco + ')" class="btn">Comprar agora</button>';
+                        '<button onclick="openModal(\'' + produto.id + '\', \'' + produto.nome + '\', ' + produto.preco + ')" class="btn">Comprar agora</button>';
 
                     var produtoHTML =
                         '<div class="gift-item ' + produtoStatusClass + '">' +
@@ -304,13 +304,47 @@ function alert_markup(alert_type, msg) {
     return '<div class="alert alert-' + alert_type + '" role="alert">' + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span>&times;</span></button></div>';
 }
 
+// Variáveis para armazenar informações do produto
+var currentProductId = null;
+var currentProductName = null;
+var currentProductPrice = null;
+
+/***************** Abrir Modal e Capturar Nome ******************/
+function openModal(productId, productName, productPrice) {
+    currentProductId = productId;
+    currentProductName = productName;
+    currentProductPrice = productPrice;
+    document.getElementById("nameModal").style.display = "flex";
+}
+
+/***************** Fechar Modal ******************/
+function closeModal() {
+    document.getElementById("nameModal").style.display = "none";
+}
+
+/***************** Confirmar e Iniciar Checkout ******************/
+function confirmPurchase() {
+    var userName = document.getElementById("userNameInput").value.trim();
+    if (!userName) {
+        $('#alert-wrapper').html(alert_markup("danger", "Por favor, insira seu nome."));
+        return;
+    }
+
+    // Inicia o checkout com o nome como userId
+    startCheckout(currentProductId, currentProductName, currentProductPrice, userName);
+
+    // Limpa o input e fecha o modal
+    document.getElementById("userNameInput").value = "";
+    closeModal();
+}
+
 /***************** Iniciar Checkout ******************/
-function startCheckout(productId, productName, productPrice) {
+function startCheckout(productId, productName, productPrice, userName) {
     // URL do Google Apps Script para criar a preferência
     var scriptUrl = "https://script.google.com/macros/s/AKfycbxSC8U3APnaVJI9hT2mvMJ7Se5N6h8SURB4OZaa8pI_eGJpNrEWdvMqcYgrUAx__x_J/exec";
 
     // Cria a URL com os parâmetros do produto
-    var url = scriptUrl + "?userId=12345&productId=" + productId + "&productName=" + encodeURIComponent(productName) + "&productPrice=" + productPrice;
+    var url = scriptUrl + "?userId=" + encodeURIComponent(userName) + "&productId=" + productId + "&productName=" + encodeURIComponent(productName) + "&productPrice=" + productPrice;
 
     // Faz a requisição POST ao Google Apps Script para iniciar o Checkout Pro
     fetch(url, { method: "POST" })

@@ -124,6 +124,7 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         document.getElementById('message').innerText = 'Presente recebido com sucesso!';
+                        window.location.href = "https://jhonyejoene.com/presentes";
                     } else if (xhr.readyState === 4) {
                         console.error('Erro ao marcar produto como comprado:', xhr.status);
                     }

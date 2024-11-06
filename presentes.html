@@ -61,6 +61,117 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <style>
+        /* Estilos do Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro transparente */
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .modal-content h2 {
+            font-size: 1.8rem;
+            color: #4A4A4A;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+        }
+
+        .modal-content .input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .modal-content .input-container i {
+            position: absolute;
+            left: 10px;
+            top: 12px;
+            font-size: 1.2rem;
+            color: #a5885f;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-content input:focus {
+            outline: none;
+            border-color: #a5885f;
+            box-shadow: 0 0 8px rgba(165, 136, 95, 0.2);
+        }
+
+        .btn {
+            padding: 12px 0;
+            background-color: #a5885f; /* Cor elegante */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #8b6e4d;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 1.5rem;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.6rem;
+            }
+
+            .modal-content input,
+            .modal-content button {
+                font-size: 1rem;
+            }
+        }
+    </style>
 
 </head>
 <body id="top">
@@ -128,6 +239,23 @@
             <!-- Produtos serão carregados aqui dinamicamente -->
         </div>
     </section>
+    <!-- Modal para Inserir Nome -->
+    <div id="nameModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Oba! Conta pra gente o seu nome.</h2>
+            <div class="">
+                <i class="fa fa-user"></i><input id="userNameInput" name="name" class=""
+                                                 placeholder="Nome completo"
+                                                 required>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="alert-wrapper"></div>
+            </div>
+            <button class="btn" onclick="confirmPurchase()">Confirmar</button>
+        </div>
+    </div>
+
 </section>
 
 
