@@ -87,30 +87,32 @@
             return urlParams.get(name);
         }
 
-        var productId = getUrlParameter("product_id");
+        var paymentId = getUrlParameter("payment_id");
 
         function checkPaymentStatus() {
             // Primeiro, obtemos o paymentId usando o productId
-            var getPaymentUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?productId=" + productId;
+            var getPaymentUrl = "https://script.google.com/macros/s/AKfycbxeId3-n2pW-X_Uee9I9qaObhktE3Vqc9hjc6u5dkyFqRuDQonN6jTaSj8iWfZXf0A6/exec?paymentId=" + paymentId;
 
             fetch(getPaymentUrl)
                 .then(response => response.json())
                 .then(data => {
-                    var paymentId = data.paymentId;
-                    if (!paymentId) {
+                    var status = data.status;
+                    if (!status) {
                         document.getElementById("message").innerText = "ID do pagamento não encontrado.";
                         return;
                     }
 
-                    // URL para verificar o status do pagamento com paymentId
-                    var checkStatusUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?paymentId=" + paymentId;
-
                     function pollStatus() {
-                        fetch(checkStatusUrl)
+                        fetch(getPaymentUrl)
                             .then(response => response.json())
                             .then(data => {
                                 if (data.status === "approved") {
-                                    window.location.href = "https://jhonyejoene.com/retorno?id=" + productId;
+                                    var productId = data.productId;
+                                    if (productId){
+                                        window.location.href = "https://jhonyejoene.com/retorno?id=" + productId;
+                                    } else {
+                                        window.location.href = "https://jhonyejoene.com/presentes";
+                                    }
                                 } else {
                                     setTimeout(pollStatus, 5000); // Verifica novamente em 5 segundos
                                 }
