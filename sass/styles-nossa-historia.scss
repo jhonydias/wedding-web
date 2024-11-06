@@ -1322,5 +1322,39 @@ body.modal-open {
   }
 }
 
+.cta-section {
+  padding: 40px 0;
+  background-color: #f9f5f0;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
+}
+
+.cta-section h3 {
+  font-size: 1.8em;
+  color: #a5885f;
+  margin-bottom: 15px;
+}
+
+.cta-section p {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.cta-section .btn-fill {
+  background-color: #a5885f;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 5px;
+  font-size: 1em;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.cta-section .btn-fill:hover {
+  background-color: #8b6b50;
+}
+
+
 
 
