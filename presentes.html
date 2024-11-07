@@ -171,6 +171,55 @@
                 font-size: 1rem;
             }
         }
+
+        /* Estilos do Card do PIX */
+        .pix-section {
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .pix-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .pix-card h2 {
+            font-size: 1.8rem;
+            color: #4A4A4A;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .pix-card p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .pix-card .btn, .pix-card .btn-qr {
+            padding: 12px 0;
+            background-color: #a5885f; /* Cor elegante */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.0rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pix-card .btn:hover, .pix-card .btn-qr:hover {
+            background-color: #8b6e4d;
+        }
+
     </style>
 
 </head>
@@ -233,6 +282,17 @@
         </div>
     </div>
 
+    <!-- Card do PIX -->
+    <section class="pix-section text-center">
+        <div class="pix-card" id="pixCard">
+            <h2>Quer nos presentear com um PIX?</h2>
+            <p>Sinta-se à vontade para contribuir da forma que preferir! Clique no botão abaixo para copiar nossa chave PIX.</p>
+            <button class="btn" onclick="copyPixKey()">Copiar chave PIX</button>
+            <button class="btn-qr" onclick="generateQrCode()">Gerar QR Code</button>
+            <p id="copy-message" style="display: none; color: green; margin-top: 10px;">Chave PIX copiada com sucesso!</p>
+        </div>
+    </section>
+
     <!-- Seção de presentes -->
     <section class="container">
         <div class="gift-container">
@@ -277,5 +337,29 @@
 <script src="js/jquery.mb.YTPlayer.min.js"></script>
 <script src="js/vendor/ouical.js"></script>
 <script src="js/scripts.min.js"></script>
+<script>
+    function generateQrCode() {
+        // Substituir o conteúdo do card pelo QR Code
+        var pixCard = document.getElementById("pixCard");
+        pixCard.innerHTML = `
+            <h2>QR Code para o PIX</h2>
+            <p>Escaneie o código abaixo com o seu aplicativo bancário.</p>
+            <img src="img/qrcode.jpeg" alt="QR Code para PIX" style="width: 200px; height: 200px; margin: 20px 0;">
+            <button class="btn" onclick="resetPixCard()">Voltar</button>
+        `;
+    }
+
+    function resetPixCard() {
+        // Restaura o conteúdo original do card
+        var pixCard = document.getElementById("pixCard");
+        pixCard.innerHTML = `
+            <h2>Quer nos presentear com um PIX?</h2>
+            <p>Sinta-se à vontade para contribuir da forma que preferir! Clique no botão abaixo para copiar nossa chave PIX.</p>
+            <button class="btn" onclick="copyPixKey()">Copiar chave PIX</button>
+            <button class="btn-qr" onclick="generateQrCode()">Gerar QR Code</button>
+            <p id="copy-message" style="display: none; color: green; margin-top: 10px;">Chave PIX copiada com sucesso!</p>
+        `;
+    }
+</script>
 </body>
 </html>

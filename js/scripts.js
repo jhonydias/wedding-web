@@ -359,3 +359,19 @@ function startCheckout(productId, productName, productPrice, userName) {
             console.error("Erro ao iniciar o checkout:", error);
         });
 }
+
+function copyPixKey() {
+    var pixKey = "7afc0a2d-0796-4b0c-848b-9966b4313168";
+
+    navigator.clipboard.writeText(pixKey).then(function() {
+        var message = document.getElementById("copy-message");
+        message.style.display = "block";
+
+        // Esconde a mensagem depois de 3 segundos
+        setTimeout(function() {
+            message.style.display = "none";
+        }, 3000);
+    }, function() {
+        alert("Falha ao copiar a chave PIX. Tente novamente.");
+    });
+}

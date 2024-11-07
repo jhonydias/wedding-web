@@ -1200,35 +1200,38 @@ body.modal-open {
 }
 
 .hero-presentes {
-  //min-height: 750px;
-  background: url('../img/eng_pics/IMG_3483-lg.jpg') no-repeat center center fixed;
-  height: 100%;
-  width: 100%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  min-height: 100vh;
+  background: url('../img/eng_pics/IMG_3483-lg.jpg') no-repeat center center;
+  background-attachment: fixed;
   background-size: cover;
+  width: 100%;
   position: relative;
-  /*.rsvp-btn {
-    position: absolute;
-    bottom: 100px;
-    left: 50%;
-  }*/
+
+  /* Ajuste para dispositivos menores */
+  @media (max-width: 768px) {
+    background-attachment: scroll;
+    background-position: center top;
+  }
+
   h1 {
     color: $txt-light;
     margin-bottom: 40px;
     font-family: "Quattrocento", serif;
     font-style: normal;
   }
+
   p.intro {
     color: $txt-light;
     font-size: 20px;
     font-weight: 300;
     margin-bottom: 80px;
   }
+
   .hero-content {
-    padding-top: 40%;
+    padding-top: 20vh; /* Ajuste para evitar que o conteúdo fique muito baixo */
+    text-align: center;
   }
+
   .hero-content img {
     width: 100%;
     margin-bottom: 12%;
