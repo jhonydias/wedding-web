@@ -42,7 +42,6 @@ $(document).ready(function () {
                 }
                 container.innerHTML = '';  // Limpar o conteúdo antes de adicionar novos produtos
                 data.forEach(function (produto) {
-                    // Definir o estado do produto com base no status
                     var produtoStatusClass = produto.status === 'OFF' ? 'product-unavailable' : '';
                     var buttonContent = produto.status === 'OFF' ?
                         '<span class="unavailable">COMPRADO</span>' :
@@ -54,6 +53,12 @@ $(document).ready(function () {
                         '<h3>' + produto.nome + '</h3>' +
                         '<p class="price">R$ ' + produto.preco + '</p>' +
                         buttonContent +
+                        '<div class="installment-info">' +
+                        '<p>Parcelamento em até 6x sem juros</p>' +
+                        '<div class="card-icons">' +
+                        '<img src="img/flags-card-sm.png" alt="flags">' +
+                        '</div>' +
+                        '</div>' +
                         '</div>';
 
                     container.innerHTML += produtoHTML;

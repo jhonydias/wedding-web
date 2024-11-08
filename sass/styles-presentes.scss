@@ -1253,5 +1253,39 @@ body.modal-open {
   filter: grayscale(100%); /* Aplicar efeito de imagem em tons de cinza */
 }
 
+/* Rodapé do card com informações de parcelamento e bandeiras */
+.gift-item .installment-info {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+.gift-item .installment-info p {
+  margin: 5px 0;
+  color: #444;
+  font-weight: bold;
+}
+
+.gift-item .installment-info .card-icons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.gift-item .installment-info .card-icons img {
+  width: 24px;
+  height: auto;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.gift-item .installment-info .card-icons img:hover {
+  opacity: 1;
+}
+
 
 
